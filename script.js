@@ -1,26 +1,58 @@
-// let quotesDataa=[];
-// async function quoteGenerator(){
-//     const apiUrl = "https://gist.githubusercontent.com/nasrulhazim/54b659e43b1035215cd0ba1d4577ee80/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json";
-//     try{
-//         const resopnse = await fetch(apiUrl);
-//          quotesDataa =  await resopnse.json();
-//          console.log(quotesDataa[1]);
-//     }
-//     catch(error){
-//         console.log(error)
-//     }
-// }
+let newQuote = document.getElementById("new-quote");
+let quote = document.getElementById("quote");
+let author = document.getElementById("author");
+let loader = document.getElementById("loader");
+let quoteContainer = document.getElementById("quote-container");
+
 let quoteData = [] ;
+//  quoteGenerator();
+
+newQuote.addEventListener("click",()=>{
+quoteGenerator();
+});
+
+let loading =()=>{
+    loader.hidden=false;
+    quoteContainer.hidden = true;
+
+}
+let show = () => {
+  loader.hidden = true;
+  quoteContainer.hidden = false;
+};
 
 async function quoteGenerator(){
-    const apiUrl = "https://type.fit/api/quotes";
+    const apiUrl = "http://api.quotable.io/random";
+    loading();
     try{
         const response = await fetch(apiUrl);
         quoteData = await response.json();
-        console.log(quoteData[Math.floor(Math.random() * quoteData.length)]);
-    }catch(error){
-        console.log(error);
-    }
-}
-quoteGenerator();
+      
+        quote.textContent = quoteData.content;
  
+          if(!quoteData.author){
+            author.textContent = "Anonymous";
+          }else{
+            author.textContent = quoteData.author;
+          }
+
+          if(quoteData.content.length > 50){
+            quote.classList.add("long-quote");
+ 
+          }else{
+            quote.classList.remove("long-quote");
+
+          }
+   show();
+
+          
+
+        //   console.log(quoteData)
+      
+    }catch(error){
+        console.log(error)
+    }
+
+};
+quoteGenerator();
+loading();
