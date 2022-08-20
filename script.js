@@ -13,14 +13,14 @@
 let quoteData = [] ;
 
 async function quoteGenerator(){
-    const apiUrl = "https://quoite.api/netify.com";
+    const apiUrl = "https://type.fit/api/quotes";
     try{
         const response = await fetch(apiUrl);
         quoteData = await response.json();
-        alert(quoteData[Math.floor(Math.random() * quoteData.length)]);
+        console.log(quoteData[Math.floor(Math.random() * quoteData.length)]);
     }catch(error){
         console.log(error);
     }
 }
-
+quoteGenerator();
  
